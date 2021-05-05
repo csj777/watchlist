@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from datetime import timedelta
 import os
 import sys
 import click
@@ -10,6 +11,8 @@ if WIN:
 else:
     prefix = 'sqlite:////'
 app = Flask(__name__)
+# 设置静态文件缓存过期时间
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(
     app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的监控
